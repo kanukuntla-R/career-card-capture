@@ -1,0 +1,31 @@
+{
+  "project": "Career Card Capture",
+  "created": "2026-08-22",
+  "purpose": "Codex design and implementation handoff",
+  "files": [
+    ".env.example",
+    "AGENTS.md",
+    "CODEX_START_HERE.md",
+    "README.md",
+    "config/google-sheet-columns.json",
+    "docker-compose.design.yml",
+    "docs/ACCEPTANCE_CRITERIA.md",
+    "docs/API_CONTRACT.md",
+    "docs/ARCHITECTURE.md",
+    "docs/CAMERA_AND_VISION.md",
+    "docs/DATA_MODEL.md",
+    "docs/DECISIONS.md",
+    "docs/DEPLOYMENT_ARCH_TAILSCALE.md",
+    "docs/DEVELOPMENT_SETUP.md",
+    "docs/GOOGLE_SHEETS_SYNC.md",
+    "docs/IMPLEMENTATION_PLAN.md",
+    "docs/OCR_DESIGN.md",
+    "docs/OPERATIONS.md",
+    "docs/PRODUCT_REQUIREMENTS.md",
+    "docs/PROJECT_CONTEXT.md",
+    "docs/REFERENCES.md",
+    "docs/SECURITY_PRIVACY.md",
+    "docs/TESTING_AND_BENCHMARK.md",
+    "docs/UX_WORKFLOWS.md"
+  ]
+}

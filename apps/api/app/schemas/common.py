@@ -1,0 +1,36 @@
+from enum import StrEnum
+
+
+class EventType(StrEnum):
+    TABLING = "TABLING"
+    CLASSROOM_PRESENTATION = "CLASSROOM_PRESENTATION"
+    OTHER = "OTHER"
+
+
+class SessionStatus(StrEnum):
+    IN_PROGRESS = "IN_PROGRESS"
+    COMPLETED = "COMPLETED"
+    ARCHIVED = "ARCHIVED"
+
+
+class CardType(StrEnum):
+    EMPLOYER = "EMPLOYER"
+    QUESTION = "QUESTION"
+    UNKNOWN = "UNKNOWN"
+
+
+class CardStatus(StrEnum):
+    CAPTURED = "CAPTURED"
+    PROCESSING = "PROCESSING"
+    NEEDS_REVIEW = "NEEDS_REVIEW"
+    APPROVED = "APPROVED"
+    SKIPPED = "SKIPPED"
+    OCR_FAILED = "OCR_FAILED"
+    REMOVED = "REMOVED"
+
+
+class SheetSyncStatus(StrEnum):
+    NOT_REQUIRED = "NOT_REQUIRED"
+    PENDING = "PENDING"
+    SYNCED = "SYNCED"
+    ERROR = "ERROR"

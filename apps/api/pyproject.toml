@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "career-card-capture-api"
+version = "0.1.0"
+description = "FastAPI backend for Career Card Capture"
+requires-python = ">=3.12"
+dependencies = [
+  "alembic==1.19.1",
+  "fastapi==0.141.1",
+  "google-api-python-client==2.198.0",
+  "google-auth==2.56.3",
+  "httpx==0.28.1",
+  "numpy==2.4.6",
+  "opencv-python-headless==4.14.0.94",
+  "psycopg[binary]==3.3.4",
+  "pydantic-settings==2.15.0",
+  "python-multipart==0.0.32",
+  "sqlalchemy==2.0.52",
+  "uvicorn[standard]==0.52.4",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==9.1.1",
+  "ruff==0.16.4",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+"app/api/routes/*.py" = ["B008"]

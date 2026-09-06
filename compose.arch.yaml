@@ -1,0 +1,9 @@
+# Arch deployment override. Create these volumes once before starting the stack.
+# Because they are external, Docker Compose does not own or remove their lifecycle.
+volumes:
+  career_cards_postgres:
+    external: true
+    name: career-card-capture-postgres-data
+  career_card_images:
+    external: true
+    name: career-card-capture-card-images

@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "columns": [
+    {
+      "key": "record_id",
+      "header": "Record ID",
+      "required": true,
+      "operational": true
+    },
+    {
+      "key": "timestamp",
+      "header": "Timestamp",
+      "required": true,
+      "operational": false
+    },
+    {
+      "key": "event",
+      "header": "Event",
+      "required": true,
+      "operational": false
+    },
+    {
+      "key": "event_type",
+      "header": "Event Type",
+      "required": true,
+      "operational": false
+    },
+    {
+      "key": "session",
+      "header": "Session",
+      "required": true,
+      "operational": false
+    },
+    {
+      "key": "response_type",
+      "header": "Response Type",
+      "required": true,
+      "operational": false
+    },
+    {
+      "key": "response",
+      "header": "Response",
+      "required": true,
+      "operational": false
+    },
+    {
+      "key": "last_updated",
+      "header": "Last Updated",
+      "required": true,
+      "operational": true
+    }
+  ]
+}

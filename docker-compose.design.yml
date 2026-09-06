@@ -1,0 +1,33 @@
+# DESIGN SKELETON ONLY.
+# Codex should replace this with a tested compose.yaml during Milestone 0.
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - career_cards_postgres:/var/lib/postgresql/data
+    # Intentionally no public port mapping.
+
+  api:
+    build: ./apps/api
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      OCR_PROVIDER: ${OCR_PROVIDER}
+    depends_on:
+      - postgres
+
+  web:
+    build: ./apps/web
+    depends_on:
+      - api
+
+  # Optional GPU/local OCR service. Implement after the core vertical slice.
+  # ocr-hunyuan:
+  #   profiles: ["hunyuan"]
+  #   build: ./services/ocr-hunyuan
+
+volumes:
+  career_cards_postgres:

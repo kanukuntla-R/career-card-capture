@@ -1,0 +1,67 @@
+name: career-card-capture
+
+services:
+  postgres:
+    image: postgres:17.11-alpine3.24
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-career_cards}
+      POSTGRES_USER: ${POSTGRES_USER:-career_cards}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - career_cards_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+    networks: [app]
+
+  api:
+    build: ./apps/api
+    environment:
+      APP_ENV: ${APP_ENV:-development}
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-career_cards}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-career_cards}
+      OCR_PROVIDER: ${OCR_PROVIDER:-mock}
+      HUNYUAN_OCR_BASE_URL: ${HUNYUAN_OCR_BASE_URL:-http://127.0.0.1:8081/v1}
+      HUNYUAN_MODEL_NAME: ${HUNYUAN_MODEL_NAME:-HYVL}
+      HUNYUAN_REQUEST_TIMEOUT_SECONDS: ${HUNYUAN_REQUEST_TIMEOUT_SECONDS:-120}
+      GOOGLE_SHEETS_ENABLED: ${GOOGLE_SHEETS_ENABLED:-false}
+      GOOGLE_SHEET_ID: ${GOOGLE_SHEET_ID:-}
+      GOOGLE_SHEET_TAB_NAME: ${GOOGLE_SHEET_TAB_NAME:-Responses}
+      GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS:-/run/secrets/google/service-account.json}
+      CARD_IMAGE_RETENTION: ${CARD_IMAGE_RETENTION:-delete_after_approval}
+      CARD_IMAGE_DIR: /data/card-images
+    volumes:
+      - career_card_images:/data/card-images
+      - ${GOOGLE_CREDENTIALS_HOST_DIR:-./config/google}:/run/secrets/google:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+    networks: [app]
+
+  web:
+    build: ./apps/web
+    environment:
+      API_INTERNAL_URL: http://api:8000
+    ports:
+      - "127.0.0.1:${WEB_PORT:-3000}:3000"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [app]
+
+volumes:
+  career_cards_postgres:
+  career_card_images:
+
+networks:
+  app:
+    driver: bridge
